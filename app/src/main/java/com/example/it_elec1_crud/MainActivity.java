@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 name.setLastname(lstName.get(i));
             }
             else if (i == lstName.size() - 2){
-                name.setMiddlename(lstName.get(i) + " ");
+                name.setMiddlename(lstName.get(i));
             }
             else {
                 tempFirstname += lstName.get(i) + " ";
