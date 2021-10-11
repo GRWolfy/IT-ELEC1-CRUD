@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         name.setFirstname(tempFirstname);
-        tempFirstname = "";
     }
 
     private void setEditText(){
