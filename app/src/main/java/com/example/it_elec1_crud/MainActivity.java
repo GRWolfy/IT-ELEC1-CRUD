@@ -8,6 +8,7 @@ import android.view.*;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Data Bindings
         btnAdd = findViewById(R.id.btnAdd);
@@ -54,13 +56,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.btnAdd:{
-                String fullname = editText_Firstname.getText().toString() + " " + editText_Middlename.getText().toString() + " " + editText_Lastname.getText().toString();
-                arrNames.add(fullname);
+            case R.id.btnAdd:
+                arrNames.add(setFullname());
                 namesAdapter.notifyDataSetChanged();
-                //createsnackbar
-            }
-            break;
+                clearEditText();
+                break;
+
+            case R.id.btnUpdate:
+                arrNames.set(index, setFullname());
+                namesAdapter.notifyDataSetChanged();
+                setIndex(0);
+                clearEditText();
+                break;
+
+            case R.id.btnDelete:
+                arrNames.remove(index);
+                namesAdapter.notifyDataSetChanged();
+                clearEditText();
+                break;
         }
     }
 
@@ -68,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Fullname = arrNames.get(i);
         //createSnackbar(arrNames.get(i), true);
+        clearEditText();
         getFullname();
         setEditText();
         setIndex(i);
@@ -117,5 +131,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int setIndex(int i){
         return index = i;
+    }
+
+    private void clearEditText(){
+        editText_Firstname.setText("");
+        editText_Middlename.setText("");
+        editText_Lastname.setText("");
+        Firstname = "";
+        Middlename = "";
+        Lastname = "";
+    }
+
+    private String setFullname(){
+        return editText_Firstname.getText().toString() + " " + editText_Middlename.getText().toString() + " " + editText_Lastname.getText().toString();
     }
 }
