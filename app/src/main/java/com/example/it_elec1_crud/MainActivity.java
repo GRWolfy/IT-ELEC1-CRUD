@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListView lstNames;
     LinearLayout main_layout;
 
+    boolean checker = false;
     ArrayList<String> arrNames;
     ArrayAdapter<String> namesAdapter;
 
@@ -70,8 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnDelete:
-                if(arrNames.size() == 0){
+                if(arrNames.size() == 0 || checker == true){
                     createSnackbar("Empty list view.", false);
+                    name.setIndex(0);
+                    checker = false;
                 }
                 else {
                     arrNames.remove(name.getIndex());
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         insertName();
         setEditText();
         name.setIndex(i);
+        checker = true;
     }
 
     private void createSnackbar(String message, boolean valid) {
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void insertName(){
         ArrayList<String> lstName = new ArrayList<String>();
         String[] newStr = name.getFullname().split(" ");
+        String tempFirstname = "";
 
         for(String s : newStr){
             lstName.add(s);
@@ -123,9 +128,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 name.setMiddlename(lstName.get(i) + " ");
             }
             else {
-                name.setFirstname(lstName.get(i) + " ");
+                tempFirstname += lstName.get(i) + " ";
             }
         }
+
+        name.setFirstname(tempFirstname);
+        tempFirstname = "";
     }
 
     private void setEditText(){
