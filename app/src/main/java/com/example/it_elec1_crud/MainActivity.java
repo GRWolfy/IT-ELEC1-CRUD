@@ -71,16 +71,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnDelete:
-                if(arrNames.size() == 0 || checker == true){
-                    createSnackbar("Empty list view.", false);
-                    name.setIndex(0);
-                    checker = false;
-                }
-                else {
+                if(arrNames.size() >= 0 && checker == true){
                     arrNames.remove(name.getIndex());
                     namesAdapter.notifyDataSetChanged();
                     clearEditText();
                     createSnackbar("Name deleted.", true);
+                    checker = false;
+                }
+                else {
+                    createSnackbar("Empty list view.", false);
+                    name.setIndex(0);
                 }
 
                 break;
